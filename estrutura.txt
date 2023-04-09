@@ -1,26 +1,31 @@
 .
 ├── docker-compose.yaml
 ├── dockerfile
+├── estrutura.tx
 ├── estrutura.txt
 ├── nest-cli.json
 ├── package.json
 ├── package-lock.json
 ├── README.md
 ├── src
-│   ├── app.controller.spec.ts
 │   ├── app.controller.ts
 │   ├── app.module.ts
 │   ├── app.service.ts
 │   ├── database
 │   │   ├── Controller
-│   │   ├── interface
+│   │   │   └── login.controller.ts
+│   │   ├── Interface
+│   │   │   └── user.interface.ts
 │   │   ├── Models
-│   │   │   └── Connection.ts
-│   │   ├── Router
-│   │   │   └── Router.ts
+│   │   │   ├── Abstract.odm.ts
+│   │   │   └── user.model.ts
+│   │   ├── Schema
+│   │   │   └── user.schema.ts
+│   │   ├── Seed
+│   │   │   └── user.seeder.ts
 │   │   └── Service
-│   ├── main.ts
-│   └── server.ts
+│   │       └── user.service.ts
+│   └── main.ts
 ├── test
 │   ├── app.e2e-spec.d.ts
 │   ├── app.e2e-spec.js
@@ -32,4 +37,4 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-8 directories, 24 files
+9 directories, 28 files

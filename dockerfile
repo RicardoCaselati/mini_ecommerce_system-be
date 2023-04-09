@@ -1,17 +1,15 @@
-FROM node:16.14-alpine
+FROM node:16-alpine
+
+RUN npm i -g @nestjs/cli
 
 WORKDIR /app
 
 COPY package*.json ./
 
-EXPOSE 3001
-
 RUN ["npm", "i"] 
 
 COPY . .
 
-RUN chown node:node /app
-
-USER node
+EXPOSE 3001
 
 CMD ["npm", "run", "start:dev"]
