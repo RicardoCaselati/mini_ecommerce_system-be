@@ -7,11 +7,11 @@ import { IUser } from '../Interface/user.interface';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
+  constructor(@InjectModel('User') private readonly usrModel: Model<IUser>) {}
 
   async register(user: IUser) {
     try {
-      const userExists = await this.userModel.findOne({ email: user.email });
+      const userExists = await this.usrModel.findOne({ email: user.email });
 
       if (userExists) {
         return { type: 401, message: 'User already registered' };
@@ -21,7 +21,7 @@ export class UserService {
       const password = user.password;
       const hash = hashSync(password, salt);
 
-      const newUser = await this.userModel.create({
+      const newUser = await this.usrModel.create({
         name: user.name,
         email: user.email,
         password: hash,
@@ -41,7 +41,7 @@ export class UserService {
   }
 
   async login(payload: any) {
-    const user = await this.userModel.findOne({ email: payload.email });
+    const user = await this.usrModel.findOne({ email: payload.email });
 
     if (!user || !compareSync(payload.password, user.password)) {
       throw new UnauthorizedException('Incorrect email or password');
@@ -56,11 +56,11 @@ export class UserService {
   }
 
   async validateUser(payload: any) {
-    return await this.userModel.findOne({ email: payload.email });
+    return await this.usrModel.findOne({ email: payload.email });
   }
 
   async getAllUserService(): Promise<IUser[]> {
-    const usersRegistred = await this.userModel.find();
+    const usersRegistred = await this.usrModel.find();
     return usersRegistred;
   }
 }

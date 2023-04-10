@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { IUser } from '../Interface/user.interface';
