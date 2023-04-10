@@ -1,0 +1,49 @@
+.
+├── Connection.ts
+├── docker-compose.yaml
+├── dockerfile
+├── estrutura.txt
+├── nest-cli.json
+├── package.json
+├── package-lock.json
+├── README.md
+├── src
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── database
+│   │   ├── Controller
+│   │   │   ├── product.controller.ts
+│   │   │   └── user.controller.ts
+│   │   ├── Interface
+│   │   │   ├── payload.interface.ts
+│   │   │   ├── product.interface.ts
+│   │   │   └── user.interface.ts
+│   │   ├── Middlewares
+│   │   │   └── auth.middleware.ts
+│   │   ├── Modules
+│   │   │   ├── product.module.ts
+│   │   │   └── user.module.ts
+│   │   ├── Schema
+│   │   │   ├── product.schema.ts
+│   │   │   └── user.schema.ts
+│   │   ├── Seed
+│   │   │   ├── product.seeder.ts
+│   │   │   ├── seed.ts
+│   │   │   └── user.seeder.ts
+│   │   └── Service
+│   │       ├── product.service.ts
+│   │       └── user.service.ts
+│   └── main.ts
+├── test
+│   ├── app.e2e-spec.d.ts
+│   ├── app.e2e-spec.js
+│   ├── app.e2e-spec.js.map
+│   ├── app.e2e-spec.ts
+│   └── jest-e2e.json
+├── tsconfig.build.json
+├── tsconfig.build.tsbuildinfo
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
+
+10 directories, 36 files

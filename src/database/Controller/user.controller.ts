@@ -6,8 +6,8 @@ import { AuthMiddleware } from '../Middlewares/auth.middleware';
 import { IPayload } from '../Interface/payload.interface';
 
 @Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UserService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
   @Post()
   async Login(
     @Res() res: Response,
@@ -16,7 +16,7 @@ export class UsersController {
   ) {
     console.log('entrei');
     const objLogin: IPayload = { email, password };
-    const { type, message } = await this.usersService.login(objLogin);
+    const { type, message } = await this.userService.login(objLogin);
 
     if (type) return res.status(type).json({ message });
     res.status(200).json({ token: message });
@@ -34,7 +34,7 @@ export class UsersController {
       email,
       password,
     };
-    const { type, message } = await this.usersService.register(objtService);
+    const { type, message } = await this.userService.register(objtService);
     if (type) return res.status(type).json({ message });
     res.status(200).json({ token: message });
   }
@@ -42,6 +42,6 @@ export class UsersController {
   @Get('/')
   @UseGuards(AuthMiddleware)
   getAllUsersController() {
-    return this.usersService.getAllUserService();
+    return this.userService.getAllUserService();
   }
 }
