@@ -1,73 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+<h1 align="center">Mini E-commerce System</h1>
+</br>
+</br>
+<h3>🖥️ Overview</h3>
+------------
+<p>This is a Rest API that provides CRUD functionality (Create, Read, Update and Delete) products in a mini e-commerce system that uses the NestJS framework. The project structure follows the pattern of folders and files recommended by NestJS itself. The src folder contains the source code files, including the main.ts file, which is the entry point to the server, and the database folder, which contains database-related files. This API also includes an authentication system using JWT (JSON Web Token).</p>
+</br>
+<h3>🦾 Technologies</h3>
+------------
+<ul>
+  <li>Nest.js</li>
+  <li>Express.js</li>
+  <li>MongoDB</li>
+  <li>Mongoose</li>
+  <li>JWT</li>
+</ul>
+</br>
+<h3>Prerequisites</h3>
+------------
+<ul>
+  <li>Node.js: 9.x.x</li>
+  <li>Docker-compose: 3.9</li>
+</ul>
+</br>
+<h3>Setup</h3>
+------------
+<ul>
+  <li>Clone the repository: git clone git@github.com:your-username/online_menu.git</li>
+  <li>Go to the project directory: cd online_menu</li>
+  <li>Install dependencies: npm install</li>
+  <li>Start the application: npm run start:dev</li>
+</ul>
+</br>
+<h3>Running with Docker</h3>
+------------
+<ul>
+ <li>Clone the repository: git clone git@github.com:your-username/online_menu.git</li>
+ <li>Go to the project directory: cd online_menu</li>
+ <li>Build the Docker image: docker-compose build</li>
+ <li>Start the containers: docker-compose up -d</li>
+</ul>
+</br>
+<h3>Endpoints</h3>
+------------
+<h5>Auth</h5>
+<ul>
+  <li>POST /login: login with email and password to get a token</li>
+  <li>POST /login/new-user: to create a new user on DB</li>
+  <li>GET /login/: to list all users on DB</li>
+</ul>
+<h5>Produto</h5>
+<ul>
+  <li>GET /products/: get all products</li>
+  <li>GET /product/:id: get a product by id</li>
+  <li>POST /product/new-product: create a new product</li>
+  <li>PATCH /product/:id: update a product by id</li>
+  <li>DELETE /product/:id: delete a product by id</li>
+</ul>
