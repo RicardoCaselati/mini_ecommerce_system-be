@@ -1,23 +1,13 @@
 import mongoose from 'mongoose';
-import { Connection } from 'mongoose';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from '../Schema/user.schema';
-import userData from './user.seeder';
+import { UserModel } from '../Models/user.model';
+import { userData } from './user.seeder';
 
-export async function seedDatabase() {
-  await MongooseModule.forRoot(process.env.MONGO_DB_URL, {
-    useUnifiedTopology: true,
-  });
-
-  const userModel = mongoose.model('User', UserSchema);
-
-  // verifica se a conexão está pronta antes de executar a operação do modelo
-  const connection: Connection = mongoose.connection;
-  if (connection.readyState !== 1) {
-    await new Promise((resolve) => connection.once('connected', resolve));
+export const seedDatabase = async (connection: mongoose.Connection) => {
+  try {
+    console.log('Iniciando a popular o banco de dados...');
+    const result = await UserModel.insertMany(userData);
+    console.log(`Inseridos ${result.length} usuários`);
+  } catch (error) {
+    console.error('Erro ao conectar ao banco de dados:', error);
   }
-  // await userModel.deleteMany({}); // limpa os dados existentes
-
-  await userModel.insertMany(userData);
-  console.log('banco de dados populado com sucesso');
-}
+};

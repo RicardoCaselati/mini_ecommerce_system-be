@@ -1,7 +1,7 @@
 .
+├── Connection.ts
 ├── docker-compose.yaml
 ├── dockerfile
-├── estrutura.tx
 ├── estrutura.txt
 ├── nest-cli.json
 ├── package.json
@@ -13,19 +13,39 @@
 │   ├── app.service.ts
 │   ├── database
 │   │   ├── Controller
-│   │   │   └── login.controller.ts
+│   │   │   ├── login.controller.ts
+│   │   │   ├── product.controller.ts
+│   │   │   └── user.controller.ts
 │   │   ├── Interface
+│   │   │   ├── payload.interface.ts
+│   │   │   ├── product.interface.ts
 │   │   │   └── user.interface.ts
+│   │   ├── Middlewares
+│   │   │   └── auth.middleware.ts
 │   │   ├── Models
 │   │   │   ├── Abstract.odm.ts
-│   │   │   └── user.model.ts
+│   │   │   ├── product.model.ts
+│   │   │   ├── user.model.ts
+│   │   │   └── user.odm.ts
+│   │   ├── Modules
+│   │   │   ├── login.module.ts
+│   │   │   ├── product.module.ts
+│   │   │   ├── routing.module.ts
+│   │   │   └── user.module.ts
 │   │   ├── Schema
+│   │   │   ├── product.schema.ts
 │   │   │   └── user.schema.ts
 │   │   ├── Seed
+│   │   │   ├── product.seeder.ts
+│   │   │   ├── seed.ts
 │   │   │   └── user.seeder.ts
 │   │   └── Service
+│   │       ├── login.service.ts
+│   │       ├── product.service.ts
 │   │       └── user.service.ts
 │   └── main.ts
+├── Strategies
+│   └── jwt.strategy.ts
 ├── test
 │   ├── app.e2e-spec.d.ts
 │   ├── app.e2e-spec.js
@@ -37,4 +57,4 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-9 directories, 28 files
+12 directories, 45 files

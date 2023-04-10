@@ -44,6 +44,14 @@ abstract class AbstractODM<T> {
 
     return this.model.findByIdAndDelete(id).exec();
   }
+
+  async findByPayload(payload: Record<string, any>) {
+    const query = {};
+    Object.keys(payload).forEach((key) => {
+      query[key] = payload[key];
+    });
+    return await this.model.findOne(query);
+  }
 }
 
 export default AbstractODM;

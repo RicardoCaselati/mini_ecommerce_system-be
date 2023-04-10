@@ -13,7 +13,7 @@ services:
       - ./:/app
     environment:
       - JWT_SECRET=jwt_secret
-      - MONGO_DB_URL=mongodb://db/nest
+      - MONGO_DB_URL=mongodb://db/mini_ecommerce_system_db
       - PORT=3001
     depends_on:
       - db

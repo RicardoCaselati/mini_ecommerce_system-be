@@ -1,15 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { model, Document } from 'mongoose';
 import { IUser } from '../Interface/user.interface';
 import { UserSchema } from '../Schema/user.schema';
-import AbstractODM from './Abstract.odm';
 
-@Injectable()
-export class UserModel extends AbstractODM<IUser> {
-  constructor(@InjectModel('User') userModel: Model<IUser>) {
-    super(userModel, UserSchema, 'User');
-  }
-
-  // Implement your custom methods here
-}
+export const UserModel = model<IUser & Document>('User', UserSchema);
