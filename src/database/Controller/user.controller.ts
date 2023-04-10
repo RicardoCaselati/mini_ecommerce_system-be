@@ -1,54 +1,26 @@
-// import {
-//   Controller,
-//   Get,
-//   Post,
-//   Body,
-//   Res,
-//   UseInterceptors,
-// } from '@nestjs/common';
-// import { Response } from 'express';
-// import { UsersService } from '../Service/user.service';
-// import { IUser } from '../Interface/user.interface';
-// import { AuthMiddleware } from '../Middlewares/auth.middleware';
-
-// @Controller('users')
-// export class UsersController {
-//   constructor(private readonly usersService: UsersService) {}
-
-//   @Post('/new-user')
-//   async createUser(
-//     @Res() res: Response,
-//     @Body('name') name: string,
-//     @Body('email') email: string,
-//     @Body('password') password: string,
-//   ) {
-//     const objtService: IUser = {
-//       name,
-//       email,
-//       password,
-//     };
-//     const { type, message } = await this.usersService.createUserService(
-//       objtService,
-//     );
-//     if (type) return res.status(type).json({ message });
-//     res.status(200).json({ token: message });
-//   }
-//   @Get('/')
-//   @UseInterceptors(AuthMiddleware)
-//   getAllUsersCntroller() {
-//     return this.usersService.getAllUserService();
-//   }
-// }
 import { Controller, Get, Post, Body, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { UsersService } from '../Service/user.service';
+import { UserService } from '../Service/user.service';
 import { IUser } from '../Interface/user.interface';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthMiddleware } from '../Middlewares/auth.middleware';
+import { IPayload } from '../Interface/payload.interface';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UserService) {}
+  @Post()
+  async Login(
+    @Res() res: Response,
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ) {
+    console.log('entrei');
+    const objLogin: IPayload = { email, password };
+    const { type, message } = await this.usersService.login(objLogin);
+
+    if (type) return res.status(type).json({ message });
+    res.status(200).json({ token: message });
+  }
 
   @Post('/new-user')
   async createUser(
@@ -62,16 +34,14 @@ export class UsersController {
       email,
       password,
     };
-    const { type, message } = await this.usersService.createUserService(
-      objtService,
-    );
+    const { type, message } = await this.usersService.register(objtService);
     if (type) return res.status(type).json({ message });
     res.status(200).json({ token: message });
   }
 
   @Get('/')
   @UseGuards(AuthMiddleware)
-  getAllUsersCntroller() {
+  getAllUsersController() {
     return this.usersService.getAllUserService();
   }
 }

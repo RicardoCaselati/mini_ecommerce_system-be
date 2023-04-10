@@ -1,13 +1,24 @@
 import mongoose from 'mongoose';
-import { UserModel } from '../Models/user.model';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { IUser } from '../Interface/user.interface';
+import { IProduct } from '../Interface/product.interface';
 import { userData } from './user.seeder';
+import { productData } from './product.seeder';
 
-export const seedDatabase = async (connection: mongoose.Connection) => {
-  try {
-    console.log('Iniciando a popular o banco de dados...');
-    const result = await UserModel.insertMany(userData);
-    console.log(`Inseridos ${result.length} usuários`);
-  } catch (error) {
-    console.error('Erro ao conectar ao banco de dados:', error);
+export class seedDatabase {
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+    @InjectModel('Product') private readonly productModel: Model<IProduct>,
+  ) {}
+  async seed(): Promise<void> {
+    try {
+      console.log('Iniciando a popular o banco de dados...');
+      await this.userModel.create(userData);
+      await this.productModel.create(productData);
+      console.log('Banco de dados populado com sucesso.');
+    } catch (error) {
+      console.error('Erro ao conectar ao banco de dados:', error);
+    }
   }
-};
+}

@@ -1,25 +1,33 @@
 import mongoose from 'mongoose';
-import { UserModel } from './src/database/Models/user.model';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { IUser } from './src/database/Interface/user.interface';
+import { IProduct } from './src/database/Interface/product.interface';
 import { seedDatabase } from './src/database/Seed/seed';
 import 'dotenv/config';
 
-const MONGO_DB_URL = 'mongodb://db/mini_ecommerce_system_db';
+const MONGO_DB_URL =
+  process.env.MONGO_DB_URL || 'mongodb://db/mini_ecommerce_system_db';
 
-const connectToDatabase = async (
-  mongoDatabaseURI = process.env.MONGO_DB_URL || MONGO_DB_URL,
-) => {
-  try {
-    await mongoose.connect(mongoDatabaseURI, {
-      connectTimeoutMS: 10000,
-      socketTimeoutMS: 30000,
-    });
-    console.log('Connecting to database...');
+export class ConnectToDatabase {
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+    @InjectModel('Product') private readonly productModel: Model<IProduct>,
+  ) {}
 
-    await UserModel.deleteMany();
-    await seedDatabase(mongoose.connection);
-  } catch (error) {
-    console.error('Error connecting to database', error);
+  async connectToDatabase(mongoDatabaseURI = MONGO_DB_URL) {
+    try {
+      await mongoose.connect(mongoDatabaseURI, {
+        connectTimeoutMS: 10000,
+        socketTimeoutMS: 30000,
+      });
+      console.log('Connecting to database...');
+      const SeedDatabase = new seedDatabase(this.userModel, this.productModel);
+      await this.userModel.deleteMany();
+      await this.productModel.deleteMany();
+      await SeedDatabase.seed();
+    } catch (error) {
+      console.error('Error connecting to database', error);
+    }
   }
-};
-
-export default connectToDatabase;
+}

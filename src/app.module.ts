@@ -6,21 +6,26 @@ import { AppService } from './app.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthMiddleware } from './database/Middlewares/auth.middleware';
+import { UserModule } from './database/Modules/user.module';
+import { ProductModule } from './database/Modules/product.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_DB_URL, {
-      dbName: 'mini_ecommerce_system_db',
+    UserModule,
+    ProductModule,
+    MongooseModule.forRoot('mongodb://localhost/nestjs', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     }),
     RoutingModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
+      secret: 'secret',
+      signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, AuthMiddleware],
+  providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
