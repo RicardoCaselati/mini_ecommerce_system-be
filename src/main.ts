@@ -17,6 +17,8 @@ async function bootstrap() {
   // Configura o passport
   app.use(passport.initialize());
 
+  app.enableCors();
+
   await app.listen(process.env.PORT);
 }
 

@@ -5,16 +5,16 @@ import { IUser } from '../Interface/user.interface';
 import { AuthMiddleware } from '../Middlewares/auth.middleware';
 import { IPayload } from '../Interface/payload.interface';
 
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post()
+
+  @Post('/login')
   async Login(
     @Res() res: Response,
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
-    console.log('entrei');
     const objLogin: IPayload = { email, password };
     const { type, message } = await this.userService.login(objLogin);
 
