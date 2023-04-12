@@ -21,14 +21,16 @@ import { ProductSchema } from './database/Schema/product.schema';
       { name: 'User', schema: UserSchema },
       { name: 'Product', schema: ProductSchema },
     ]),
-    MongooseModule.forRoot('mongodb://db/mini_ecommerce_system_db'),
+    MongooseModule.forRoot(
+      process.env.MONGO_DB_URL || 'mongodb://db/mini_ecommerce_system_db',
+    ),
     PassportModule,
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '60s' },
     }),
     RouterModule.register([
-      { path: '/users', module: UserModule },
+      { path: '/user', module: UserModule },
       { path: '/products', module: ProductModule },
     ]),
   ],
@@ -39,7 +41,10 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .exclude('/login', '/users/new-user')
-      .forRoutes('*');
+      .exclude(
+        { path: '/user/login', method: 'POST' as any },
+        { path: '/products/new-product', method: 'POST' as any },
+      )
+      .forRoutes({ path: '*', method: 'ALL' as any });
   }
 }
