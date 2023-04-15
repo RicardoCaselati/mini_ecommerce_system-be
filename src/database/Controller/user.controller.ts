@@ -16,10 +16,10 @@ export class UserController {
     @Body('password') password: string,
   ) {
     const objLogin: IPayload = { email, password };
-    const { type, message } = await this.userService.login(objLogin);
+    const { type, message, name } = await this.userService.login(objLogin);
 
     if (type) return res.status(type).json({ message });
-    res.status(200).json({ token: message });
+    res.status(200).json({ token: message, name });
   }
 
   @Post('/new-user')
@@ -36,7 +36,7 @@ export class UserController {
     };
     const { type, message } = await this.userService.register(objtService);
     if (type) return res.status(type).json({ message });
-    res.status(200).json({ token: message });
+    res.status(200).json({ token: message, name });
   }
 
   @Get('/')

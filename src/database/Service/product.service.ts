@@ -12,7 +12,10 @@ export class ProductService {
 
   async getAllProductsService(): Promise<IProduct[]> {
     const products = await this.productModel.find();
-    return products;
+    return products.map(product => {
+      const { _id, ...rest } = product.toObject(); // aqui retiramos o _id e criamos um objeto com o restante dos campos
+      return { id: _id.toString(), ...rest }; // aqui criamos um novo objeto com o campo "id" em vez de "_id"
+    });
   }
 
   async createProductService(
@@ -39,7 +42,7 @@ export class ProductService {
     product: IProduct,
   ): Promise<IProduct> {
     const updatedProduct = await this.productModel
-      .findOneAndUpdate({ _id: id }, product, { new: true })
+      .findOneAndUpdate({ id: id }, product, { new: true })
       .lean();
     return updatedProduct;
   }
