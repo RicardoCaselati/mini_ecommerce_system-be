@@ -33,7 +33,7 @@ export class UserService {
         process.env.JWT_SECRET as string,
         { expiresIn: '12h' },
       );
-      return { type: null, message: token };
+      return { type: null, message: token, name };
     } catch (error) {
       console.log(error);
       return { type: 500, message: 'Internal server error.' };
@@ -52,7 +52,7 @@ export class UserService {
       expiresIn: '12h',
     });
 
-    return { type: null, message: token };
+    return { type: null, message: token, name };
   }
 
   async validateUser(payload: any) {
