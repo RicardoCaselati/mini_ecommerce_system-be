@@ -14,6 +14,7 @@ async function bootstrap() {
     const connection = new Connection_1.ConnectToDatabase(app.get('UserModel'), app.get('ProductModel'));
     await connection.connectToDatabase();
     app.use(passport_1.default.initialize());
+    app.enableCors();
     await app.listen(process.env.PORT);
 }
 bootstrap();

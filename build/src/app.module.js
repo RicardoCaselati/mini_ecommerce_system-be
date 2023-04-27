@@ -16,39 +16,40 @@ const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const auth_middleware_1 = require("./database/Middlewares/auth.middleware");
 const user_controller_1 = require("./database/Controller/user.controller");
-const product_service_1 = require("./database/Service/product.service");
-const product_controller_1 = require("./database/Controller/product.controller");
 const user_service_1 = require("./database/Service/user.service");
-const product_module_1 = require("./database/Modules/product.module");
 const user_module_1 = require("./database/Modules/user.module");
+const product_controller_1 = require("./database/Controller/product.controller");
+const product_service_1 = require("./database/Service/product.service");
+const product_module_1 = require("./database/Modules/product.module");
+const user_schema_1 = require("./database/Schema/user.schema");
+const product_schema_1 = require("./database/Schema/product.schema");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(auth_middleware_1.AuthMiddleware)
-            .exclude('/login', '/users/new-user')
-            .forRoutes('*');
+            .exclude({ path: '/user/login', method: 'POST' }, { path: '/user/new-user', method: 'POST' }, { path: '/products/', method: 'GET' })
+            .forRoutes({ path: '*', method: 'ALL' });
     }
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            user_module_1.UserModule,
-            product_module_1.ProductModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost/nestjs', {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            }),
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'User', schema: user_schema_1.UserSchema },
+                { name: 'Product', schema: product_schema_1.ProductSchema },
+            ]),
+            mongoose_1.MongooseModule.forRoot(process.env.MONGO_DB_URL || 'mongodb://db/mini_ecommerce_system_db'),
             passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: 'secret',
                 signOptions: { expiresIn: '60s' },
             }),
             core_1.RouterModule.register([
-                { path: '/users', module: user_module_1.UserModule },
+                { path: '/user', module: user_module_1.UserModule },
                 { path: '/products', module: product_module_1.ProductModule },
             ]),
         ],
-        controllers: [app_controller_1.AppController, user_controller_1.UsersController, product_controller_1.ProductsController],
+        controllers: [app_controller_1.AppController, user_controller_1.UserController, product_controller_1.ProductsController],
         providers: [app_service_1.AppService, user_service_1.UserService, product_service_1.ProductService],
     })
 ], AppModule);

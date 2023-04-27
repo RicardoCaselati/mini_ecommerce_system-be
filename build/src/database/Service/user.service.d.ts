@@ -25,15 +25,21 @@
 import { Model } from 'mongoose';
 import { IUser } from '../Interface/user.interface';
 export declare class UserService {
-    private readonly userModel;
-    constructor(userModel: Model<IUser>);
+    private readonly usrModel;
+    constructor(usrModel: Model<IUser>);
     register(user: IUser): Promise<{
         type: number;
         message: string;
+        name?: undefined;
+    } | {
+        type: any;
+        message: string;
+        name: string;
     }>;
     login(payload: any): Promise<{
         type: any;
         message: string;
+        name: string;
     }>;
     validateUser(payload: any): Promise<import("mongoose").Document<unknown, {}, IUser> & Omit<IUser & {
         _id: import("mongoose").Types.ObjectId;
