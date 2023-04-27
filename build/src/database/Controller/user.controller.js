@@ -12,21 +12,20 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersController = void 0;
+exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../Service/user.service");
 const auth_middleware_1 = require("../Middlewares/auth.middleware");
-let UsersController = class UsersController {
-    constructor(usersService) {
-        this.usersService = usersService;
+let UserController = class UserController {
+    constructor(userService) {
+        this.userService = userService;
     }
     async Login(res, email, password) {
-        console.log('entrei');
         const objLogin = { email, password };
-        const { type, message } = await this.usersService.login(objLogin);
+        const { type, message, name } = await this.userService.login(objLogin);
         if (type)
             return res.status(type).json({ message });
-        res.status(200).json({ token: message });
+        res.status(200).json({ token: message, name });
     }
     async createUser(res, name, email, password) {
         const objtService = {
@@ -34,24 +33,24 @@ let UsersController = class UsersController {
             email,
             password,
         };
-        const { type, message } = await this.usersService.register(objtService);
+        const { type, message } = await this.userService.register(objtService);
         if (type)
             return res.status(type).json({ message });
-        res.status(200).json({ token: message });
+        res.status(200).json({ token: message, name });
     }
     getAllUsersController() {
-        return this.usersService.getAllUserService();
+        return this.userService.getAllUserService();
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('/login'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Body)('email')),
     __param(2, (0, common_1.Body)('password')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String, String]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "Login", null);
+], UserController.prototype, "Login", null);
 __decorate([
     (0, common_1.Post)('/new-user'),
     __param(0, (0, common_1.Res)()),
@@ -61,17 +60,17 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String, String, String]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "createUser", null);
+], UserController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Get)('/'),
     (0, common_1.UseGuards)(auth_middleware_1.AuthMiddleware),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "getAllUsersController", null);
-UsersController = __decorate([
-    (0, common_1.Controller)('users'),
+], UserController.prototype, "getAllUsersController", null);
+UserController = __decorate([
+    (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])
-], UsersController);
-exports.UsersController = UsersController;
+], UserController);
+exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

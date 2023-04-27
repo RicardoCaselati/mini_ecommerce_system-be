@@ -19,26 +19,26 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const bcryptjs_1 = require("bcryptjs");
 let UserService = class UserService {
-    constructor(userModel) {
-        this.userModel = userModel;
+    constructor(usrModel) {
+        this.usrModel = usrModel;
     }
     async register(user) {
         try {
-            const userExists = await this.userModel.findOne({ email: user.email });
+            const userExists = await this.usrModel.findOne({ email: user.email });
             if (userExists) {
                 return { type: 401, message: 'User already registered' };
             }
             const salt = 10;
             const password = user.password;
             const hash = (0, bcryptjs_1.hashSync)(password, salt);
-            const newUser = await this.userModel.create({
+            const newUser = await this.usrModel.create({
                 name: user.name,
                 email: user.email,
                 password: hash,
             });
             const { email, _id, name } = newUser;
             const token = (0, jsonwebtoken_1.sign)({ email, id: _id, name }, process.env.JWT_SECRET, { expiresIn: '12h' });
-            return { type: null, message: token };
+            return { type: null, message: token, name };
         }
         catch (error) {
             console.log(error);
@@ -46,7 +46,7 @@ let UserService = class UserService {
         }
     }
     async login(payload) {
-        const user = await this.userModel.findOne({ email: payload.email });
+        const user = await this.usrModel.findOne({ email: payload.email });
         if (!user || !(0, bcryptjs_1.compareSync)(payload.password, user.password)) {
             throw new common_1.UnauthorizedException('Incorrect email or password');
         }
@@ -54,13 +54,13 @@ let UserService = class UserService {
         const token = (0, jsonwebtoken_1.sign)({ email, name }, process.env.JWT_SECRET, {
             expiresIn: '12h',
         });
-        return { type: null, message: token };
+        return { type: null, message: token, name };
     }
     async validateUser(payload) {
-        return await this.userModel.findOne({ email: payload.email });
+        return await this.usrModel.findOne({ email: payload.email });
     }
     async getAllUserService() {
-        const usersRegistred = await this.userModel.find();
+        const usersRegistred = await this.usrModel.find();
         return usersRegistred;
     }
 };

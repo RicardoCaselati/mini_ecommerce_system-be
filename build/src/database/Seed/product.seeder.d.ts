@@ -3,5 +3,5 @@ export declare const productData: {
     price: number;
     qty: number;
     image: string;
-    discription: string;
+    description: string;
 }[];

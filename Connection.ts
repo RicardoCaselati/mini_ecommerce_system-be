@@ -8,7 +8,7 @@ import 'dotenv/config';
 
 const MONGO_DB_URL =
   process.env.MONGO_DB_URL ||
-  'mongodb+srv://mongo:8jPVCjHierlKyooi@cluster0.urfcy2p.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://mongo:K5ZIpXBnBSbPz7R8@cluster0.urfcy2p.mongodb.net/?retryWrites=true&w=majority';
 
 export class ConnectToDatabase {
   constructor(

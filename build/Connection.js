@@ -21,7 +21,8 @@ const mongoose_2 = require("mongoose");
 const mongoose_3 = require("@nestjs/mongoose");
 const seed_1 = require("./src/database/Seed/seed");
 require("dotenv/config");
-const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://db/mini_ecommerce_system_db';
+const MONGO_DB_URL = process.env.MONGO_DB_URL ||
+    'mongodb+srv://mongo:K5ZIpXBnBSbPz7R8@cluster0.urfcy2p.mongodb.net/?retryWrites=true&w=majority';
 let ConnectToDatabase = class ConnectToDatabase {
     constructor(userModel, productModel) {
         this.userModel = userModel;

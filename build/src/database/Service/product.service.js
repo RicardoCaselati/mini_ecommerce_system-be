@@ -22,7 +22,10 @@ let ProductService = class ProductService {
     }
     async getAllProductsService() {
         const products = await this.productModel.find();
-        return products;
+        return products.map(product => {
+            const { _id, ...rest } = product.toObject();
+            return { id: _id.toString(), ...rest };
+        });
     }
     async createProductService(product) {
         const productDocument = await this.productModel.create({
@@ -41,7 +44,7 @@ let ProductService = class ProductService {
     }
     async updateProductByIdService(id, product) {
         const updatedProduct = await this.productModel
-            .findOneAndUpdate({ _id: id }, product, { new: true })
+            .findOneAndUpdate({ id: id }, product, { new: true })
             .lean();
         return updatedProduct;
     }
